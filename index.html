@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Countdown to 10/17/2025</title>
+
+    <!-- Link to compiled CSS -->
+    <link rel="stylesheet" href="styles/main.css">
+
+    <!-- Optional: a nice Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+<main class="container">
+    <section class="card">
+        <h1 class="title">WEEKEND WITH JONAH STARTS</h1>
+
+        <div id="countdown" class="timer">
+            <div class="segment"><span id="days">–</span><small>Days</small></div>
+            <div class="segment"><span id="hours">–</span><small>Hours</small></div>
+            <div class="segment"><span id="minutes">–</span><small>Minutes</small></div>
+            <div class="segment"><span id="seconds">–</span><small>Seconds</small></div>
+        </div>
+
+        <p class="footer">10 / 17 / 2025  23:00 (CAT)</p>
+    </section>
+</main>
+
+<script>
+    // ---------- CONFIG ----------
+    // Target date: 17 Oct 2025, 23:00 CAT (UTC+2)
+    const target = new Date('2025-10-17T23:00:00+02:00').getTime();
+
+    // ---------- COUNTDOWN LOGIC ----------
+    const daysEl   = document.getElementById('days');
+    const hoursEl  = document.getElementById('hours');
+    const minsEl   = document.getElementById('minutes');
+    const secsEl   = document.getElementById('seconds');
+
+    function updateTimer() {
+        const now = Date.now();
+        const diff = target - now;
+
+        if (diff <= 0) {
+            // Countdown finished
+            daysEl.textContent   = '0';
+            hoursEl.textContent  = '0';
+            minsEl.textContent   = '0';
+            secsEl.textContent   = '0';
+            clearInterval(interval);
+            return;
+        }
+
+        const sec  = Math.floor(diff / 1000 % 60);
+        const min  = Math.floor(diff / (1000 * 60) % 60);
+        const hour = Math.floor(diff / (1000 * 60 * 60) % 24);
+        const day  = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+        daysEl.textContent   = day;
+        hoursEl.textContent  = String(hour).padStart(2, '0');
+        minsEl.textContent   = String(min).padStart(2, '0');
+        secsEl.textContent   = String(sec).padStart(2, '0');
+    }
+
+    const interval = setInterval(updateTimer, 1000);
+    updateTimer(); // initial call
+</script>
+</body>
+</html>
